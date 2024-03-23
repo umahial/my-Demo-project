@@ -1,2 +1,259 @@
 gajamana gojiaghana
 sundri dhana gun khaibake mana
+
+1.java 8 fetures
+2.what is method overriding in java
+
+answer :
+method overriding is a part of polymorphism it is also known as runtime ploymorphism or dynamic binding.
+Method overriding is like giving a specific version of a general instruction based on the  needs of the subclass..
+
+in method overriding the method name and paramaters are same but the only diffrent is that it should be diffrent class and that class should be parent chield relationship.
+
+for example animal
+first imagine we have a base class called animal,these class represent any general animal,and it has a method called makesound() that simly prints a generic message
+class Animal{
+void makeSound()
+{
+	System.out.prientln("animal makes a sound");
+}
+}
+
+
+Now, let's say we want to represent a specific type of animal, such as a Dog. We know that dogs don't just make any sound; they bark. So, we create a Dog class that extends Animal and override the makeSound() method to reflect this:
+
+
+class Dog extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+Similarly, if we want to represent a Cat in our animal hierarchy, we can create a Cat class that also extends Animal. We override the makeSound() method again to make it meow:
+
+
+class Cat extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Cat meows");
+    }
+}
+In this example, both Dog and Cat classes provide their own implementations of the makeSound() method defined in the Animal class. When you create a Dog object and call makeSound(), it will print "Dog barks". Similarly, calling makeSound() on a Cat object prints "Cat meows". This demonstrates method overriding, where subclasses provide specific implementations of a method declared in the superclass.
+
+
+
+Method overriding is like giving a specific version of a general instruction based on the context.
+
+
+3.what is method overloading in java
+
+
+Method overloading is when you have multiple methods in the same class with the same name but different parameters. It's a way to perform different operations based on the number or type of parameters given, like having different versions of the same method to handle different inputs.
+
+example:
+
+Imagine you have a class Calculator that can add numbers, but you want it to handle different types of input: two integers, three integers, or two doubles. You can overload the add method to accommodate these scenarios:
+
+
+class Calculator {
+
+    // Method to add two integers
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // Overloaded method to add three integers
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+
+    // Overloaded method to add two double values
+    public double add(double a, double b) {
+        return a + b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Calculator calc = new Calculator();
+
+        System.out.println(calc.add(5, 7));          // Calls first add method (int, int)
+        System.out.println(calc.add(4, 9, 12));      // Calls second add method (int, int, int)
+        System.out.println(calc.add(3.5, 2.8));      // Calls third add method (double, double)
+    }
+}
+In this example, the Calculator class has three versions of the add method:
+
+The first adds two integers.
+The second adds three integers.
+The third adds two doubles.
+This demonstrates method overloading by using the same method name add with different parameters to perform similar but slightly different operations.
+
+
+4.can we ovverride the private method?
+
+No, you cannot override private methods in Java. The reason is that private methods are not visible to any subclass, so they are not accessible outside the class in which they are declared. Overriding depends on having a method in a superclass that is accessible to a subclass, so that the subclass can provide its own implementation.
+
+class SuperClass {
+    private void show() {
+        System.out.println("SuperClass's show()");
+    }
+}
+
+class SubClass extends SuperClass {
+    public void show() {
+        System.out.println("SubClass's show()");
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        SuperClass obj = new SubClass();
+        // obj.show(); // This line would cause a compile-time error because show() in SuperClass is not visible.
+    }
+}
+In this example, SubClass has a public show() method, but it's not overriding SuperClass's private show() method. It's merely a separate method unique to SubClass. The SuperClass's show() method is not accessible from obj, which is a reference of type SuperClass, and trying to call it directly would result in a compile-time error.
+
+
+In Java, you cannot override static methods in the way you override instance methods. However, you can define a static method with the same signature in the subclass, which is known as method hiding. This means that the subclass has its own version of the static method, which is separate from the version in the superclass. The version of the static method that gets invoked depends on the class type through which it is called.
+
+
+
+3.use of static keywords
+
+The static keyword in Java has several uses, mainly revolving around the idea of belonging to the class itself rather than an instance of the class. Here’s a quick rundown:
+
+Static Variables: They are shared among all instances of a class. This means if one instance changes the value of a static variable, that change is reflected across all instances.
+
+Static Methods: These can be called without creating an object of the class. They can access static variables but not instance variables directly.
+
+Static Blocks: A static block is used for static initialization of a class. It runs when the class is first loaded into memory, before any object creation or static method call.
+
+Static Classes: Only nested classes can be static. A static nested class does not need a reference to an outer class object to be instantiated.
+
+In essence, static helps manage memory by sharing common data among all instances and provides a way to access methods that can operate without needing an instance of the class.
+
+
+
+
+Let's consider a simple example to illustrate the use of the static keyword in Java. Imagine you're building an application for a school to keep track of the total number of students enrolled.
+
+java
+Copy code
+public class School {
+    // Static variable
+    static int numberOfStudents = 0;
+
+    // Constructor
+    public School() {
+        numberOfStudents++; // Increment the static variable by 1 for every new student created
+    }
+
+    // Static method
+    public static void displayTotalStudents() {
+        System.out.println("Total number of students: " + numberOfStudents);
+    }
+    
+    // Static block
+    static {
+        System.out.println("Static block - School class is loaded.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // The static block executes first when the School class is loaded.
+        
+        // Create instances of the School class
+        School student1 = new School();
+        School student2 = new School();
+        
+        // Call the static method
+        School.displayTotalStudents(); // Output: Total number of students: 2
+        
+        // Access the static variable
+        System.out.println("Accessing directly: " + School.numberOfStudents); // Output: Accessing directly: 2
+    }
+}
+In this example:
+
+Static Variable: numberOfStudents is a static variable that tracks the total number of students across all instances of the School class.
+Static Method: displayTotalStudents is a static method that displays the total number of students and can be called without creating an instance of the School class.
+Static Block: This block is executed once when the School class is first loaded, which is before any objects are created or static methods are called. It's used for initial setup or logging.
+This setup demonstrates how static can be used to share a common property (total number of students) across all instances of a class, perform actions without needing an instance, and initialize resources when a class is first loaded.
+
+
+
+
+
+Let's consider a simple example to illustrate the use of the static keyword in Java. Imagine you're building an application for a school to keep track of the total number of students enrolled.
+
+java
+Copy code
+public class School {
+    // Static variable
+    static int numberOfStudents = 0;
+
+    // Constructor
+    public School() {
+        numberOfStudents++; // Increment the static variable by 1 for every new student created
+    }
+
+    // Static method
+    public static void displayTotalStudents() {
+        System.out.println("Total number of students: " + numberOfStudents);
+    }
+    
+    // Static block
+    static {
+        System.out.println("Static block - School class is loaded.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // The static block executes first when the School class is loaded.
+        
+        // Create instances of the School class
+        School student1 = new School();
+        School student2 = new School();
+        
+        // Call the static method
+        School.displayTotalStudents(); // Output: Total number of students: 2
+        
+        // Access the static variable
+        System.out.println("Accessing directly: " + School.numberOfStudents); // Output: Accessing directly: 2
+    }
+}
+In this example:
+
+Static Variable: numberOfStudents is a static variable that tracks the total number of students across all instances of the School class.
+Static Method: displayTotalStudents is a static method that displays the total number of students and can be called without creating an instance of the School class.
+Static Block: This block is executed once when the School class is first loaded, which is before any objects are created or static methods are called. It's used for initial setup or logging.
+This setup demonstrates how static can be used to share a common property (total number of students) across all instances of a class, perform actions without needing an instance, and initialize resources when a class is first loaded.
+
+
+Project Description:
+O-Net social media platform that can provide you with unique and effective social media connections. To help you bridge the distance gap, you can now connect with the people you care about and their interest. O-Net allows you to privately share images, Audio, videos, texts, and GIFs with your friends, or publish them to everyone to view, always ensuring your personal information is safe. With Al technology, it can help you connect with the right people that match your interests. O-Net encourages you to connect with like-minded people. 0-Net can help you connect with friends and family, and easily discover new friends through highlights such as groups, watching, and markets
+has context menu
+
+[Yesterday 12:38 PM] Uma Hial
+ Project-3 Title: O-Net Tools: Java 8, Spring Boot, Spring Data JPA, Eclipse, MySQL, Angular, Log4j, Web Sockets, Elastic Search.
+ 
+ 
+ 
+ 
+ Responsibilities:
+ Involved in collecting the requirements from the Product Owner. Complete end to end ownership of the module. Participate in architectural and software development activities. Involved in writing spring boot with rest A P I control and service and repository integration layers as part of services team Gathering, understanding the requirements and technical specification. Recognize the production and non-production application issues. Participated daily in Scrum meets to discuss different issues in the project.
+ 
+ 
+ 
+ 
+ Project Description:
+O-Net social media platform that can provide you with unique and effective social media connections. To help you bridge the distance gap, you can now connect with the people you care about and their interest. O-Net allows you to privately share images, Audio, videos, texts, and GIFs with your friends, or publish them to everyone to view, always ensuring your personal information is safe. With Al technology, it can help you connect with the right people that match your interests. O-Net encourages you to connect with like-minded people. 0-Net can help you connect with friends and family, and easily discover new friends through highlights such as groups, watching, and markets
+
+Highly energetic IT professional with more than 2 years of experience in Software Development, Java Spring Boot Microservices web-based distributed applications.
+
+
+
+
